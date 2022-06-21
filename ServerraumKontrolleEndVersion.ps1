@@ -1,6 +1,6 @@
-# Autor: Dominik Costa
+# Author: Dominik Costa
 # Version: 4.0
-# Erstellt: 17. Oktober 2019
+# Created: 17. Oktober 2019
 # Mutated: 21. Juni 2022
 
 #----------------------------------------------------------------------------------
@@ -9,7 +9,7 @@
 PowerShell.exe -windowstyle hidden {
 
 #----------------------------------------------------------------------------------
-#GUI Fenster
+#GUI
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 $window = New-Object System.Windows.Forms.Form
@@ -17,10 +17,10 @@ $window.Width = 700
 $window.Height = 300
 
 #----------------------------------------------------------------------------------
-#Text Server room 1 aussen
+#Text Server room 1 outside
 $Label = New-Object System.Windows.Forms.Label
 $Label.Location = New-Object System.Drawing.Size(10,10)
-$Label.Text = "Serverroom 1 outside"
+$Label.Text = "Server room 1 outside"
 $Label.AutoSize = $True
 
 $Label2 = New-Object System.Windows.Forms.Label
@@ -37,7 +37,7 @@ $window.Controls.Add($Label2)
 $window.Controls.Add($Label3)
 
 #----------------------------------------------------------------------------------
-#Eingabe  Server room 1 aussen
+#Eingabe  Server room 1 outside
 
 $windowTextBox = New-Object System.Windows.Forms.TextBox
 $windowTextBox.Location = New-Object System.Drawing.Size(10,50)
@@ -50,10 +50,10 @@ $windowTextBox2.Size = New-Object System.Drawing.Size(100,100)
 $window.Controls.Add($windowTextBox2)
 
 #----------------------------------------------------------------------------------
-#Text Server room 1 Innen
+#Text Server room 1 inside
 $Label4 = New-Object System.Windows.Forms.Label
 $Label4.Location = New-Object System.Drawing.Size(350,10)
-$Label4.Text = "Serverroom 1 inside"
+$Label4.Text = "Server room 1 inside"
 $Label4.AutoSize = $True
 
 $Label5 = New-Object System.Windows.Forms.Label
@@ -70,7 +70,7 @@ $window.Controls.Add($Label5)
 $window.Controls.Add($Label6)
 
 #----------------------------------------------------------------------------------
-# Server room 1 Innen
+# Server room 1 inside
 
 $windowTextBox3 = New-Object System.Windows.Forms.TextBox
 $windowTextBox3.Location = New-Object System.Drawing.Size(350,50)
@@ -86,7 +86,7 @@ $window.Controls.Add($windowTextBox4)
 # Text Server room 2
 $Label7 = New-Object System.Windows.Forms.Label
 $Label7.Location = New-Object System.Drawing.Size(10,80)
-$Label7.Text = "Serveroom 2"
+$Label7.Text = "Serve room 2"
 $Label7.AutoSize = $True
 
 $Label8 = New-Object System.Windows.Forms.Label
@@ -216,7 +216,8 @@ Do{
 sleep 1
 clear
 #----------------------------------------------------------------------------------
-## Speichern + Schliessen
+## Save & Close
+
 $workbook.Save()
 sleep 1
 $objexcel.Quit()
@@ -231,7 +232,3 @@ $window.Controls.Add($windowButton)
 
 }
 exit
-
-
-# Ende
-#----------------------------------------------------------------------------------
