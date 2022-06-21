@@ -1,12 +1,7 @@
-#
-# Name: Serverraum Kontrolle
-# Funktion: Serverraum Kontrolle Automatisieren
 # Autor: Dominik Costa
-# Version: 1.0
+# Version: 4.0
 # Erstellt: 17. Oktober 2019
-# Mutiert: 22. Juli 2020
-#
-
+# Mutated: 21. Juni 2022
 
 #----------------------------------------------------------------------------------
 # Start
@@ -22,10 +17,10 @@ $window.Width = 700
 $window.Height = 300
 
 #----------------------------------------------------------------------------------
-#Text Serveraum 1 aussen
+#Text Server room 1 aussen
 $Label = New-Object System.Windows.Forms.Label
 $Label.Location = New-Object System.Drawing.Size(10,10)
-$Label.Text = "Serverraum 1 Aussen"
+$Label.Text = "Serverroom 1 outside"
 $Label.AutoSize = $True
 
 $Label2 = New-Object System.Windows.Forms.Label
@@ -42,7 +37,7 @@ $window.Controls.Add($Label2)
 $window.Controls.Add($Label3)
 
 #----------------------------------------------------------------------------------
-#Eingabe  Serveraum 1 aussen
+#Eingabe  Server room 1 aussen
 
 $windowTextBox = New-Object System.Windows.Forms.TextBox
 $windowTextBox.Location = New-Object System.Drawing.Size(10,50)
@@ -55,10 +50,10 @@ $windowTextBox2.Size = New-Object System.Drawing.Size(100,100)
 $window.Controls.Add($windowTextBox2)
 
 #----------------------------------------------------------------------------------
-#Text Serveraum 1 Innen
+#Text Server room 1 Innen
 $Label4 = New-Object System.Windows.Forms.Label
 $Label4.Location = New-Object System.Drawing.Size(350,10)
-$Label4.Text = "Serverraum 1 Innen"
+$Label4.Text = "Serverroom 1 inside"
 $Label4.AutoSize = $True
 
 $Label5 = New-Object System.Windows.Forms.Label
@@ -75,7 +70,7 @@ $window.Controls.Add($Label5)
 $window.Controls.Add($Label6)
 
 #----------------------------------------------------------------------------------
-#Eingabe  Serveraum 1 Innen
+# Server room 1 Innen
 
 $windowTextBox3 = New-Object System.Windows.Forms.TextBox
 $windowTextBox3.Location = New-Object System.Drawing.Size(350,50)
@@ -88,10 +83,10 @@ $windowTextBox4.Size = New-Object System.Drawing.Size(100,100)
 $window.Controls.Add($windowTextBox4)
 
 #----------------------------------------------------------------------------------
-#Text Serveraum 2
+# Text Server room 2
 $Label7 = New-Object System.Windows.Forms.Label
 $Label7.Location = New-Object System.Drawing.Size(10,80)
-$Label7.Text = "Serverraum 2"
+$Label7.Text = "Serveroom 2"
 $Label7.AutoSize = $True
 
 $Label8 = New-Object System.Windows.Forms.Label
@@ -108,7 +103,7 @@ $window.Controls.Add($Label8)
 $window.Controls.Add($Label9)
 
 #----------------------------------------------------------------------------------
-#Eingabe  Serveraum 2
+# Server room 2
 
 $windowTextBox5 = New-Object System.Windows.Forms.TextBox
 $windowTextBox5.Location = New-Object System.Drawing.Size(10,120)
@@ -136,7 +131,8 @@ $window.Controls.Add($windowTextBox6)
      clear
    
 #----------------------------------------------------------------------------------
-# Excel Oeffnen
+# openExcel
+
 $objexcel=New-Object -ComObject Excel.Application
 $workbook=$objexcel.WorkBooks.Open('YourPath\Serverroom.xlsx')
 $worksheet=$workbook.WorkSheets.item(1)
@@ -144,7 +140,7 @@ $objexcel.Visible=$true
 sleep 2
 
 #----------------------------------------------------------------------------------
-# Variablen Deklarieren
+# Variable
     $zeit = Get-Date -f HH:mm
     $kuerzel = $env:UserName
 	$DD = Get-Date -f dd.MM.yyyy
@@ -153,29 +149,29 @@ sleep 2
 	$bemerkung = ""
 	
 #----------------------------------------------------------------------------------
-# Temperatur Abfrage
+# check temperature
 
 	if ([float]$windowTextBox.Text -gt 27.0 -or [float]$windowTextBox3.Text -gt 27.0 -or [float]$windowTextBox5.Text -gt 27.0 )
 	{
-		$bemerkung = "Temperatur zu hoch!!!"
+		$bemerkung = "Temperature to high!"
 	}
 	
 	elseif ([float]$windowTextBox2.Text -gt 70.0 -or [float]$windowTextBox4.Text -gt 70.0 -or [float]$windowTextBox6.Text -gt 70.0)
 	{
-		$bemerkung = "Luftfeuchtigkeit zu hoch!!!"
+		$bemerkung = "Humidty to high!"
 	}
 	elseif ([float]$windowTextBox.Text -lt 17.0 -or [float]$windowTextBox3.Text -lt 17.0 -or [float]$windowTextBox5.Text -lt 17.0 )
 	{
-		$bemerkung = "Temperatur zu tief!!!"
+		$bemerkung = "Temperature to low!"
 	}
 	
 	elseif ([float]$windowTextBox2.Text -lt 30.0 -or [float]$windowTextBox4.Text -lt 30 -or [float]$windowTextBox6.Text -lt 30)
 	{
-		$bemerkung = "Luftfeuchtigkeit zu tief!!!"
+		$bemerkung = "Humidty to low!"
 	}
 	
 #----------------------------------------------------------------------------------
-# Freie Zelle Finden
+# find empty cells
 
 $z= 2400
 Do{
@@ -194,7 +190,7 @@ Do{
 } until (($worksheet.Cells.Item($z,1).Text -eq "" ) -or ($worksheet.Cells.Item($z,1).Text -match $Day.Remove(2) -and $worksheet.Cells.Item($z,1).Text -match $DD))
 
 #----------------------------------------------------------------------------------
-# Leere Excel Zellen Beschreiben
+# Write Excel
     
 		$worksheet.Cells.Item($z,1) = $date
 	    $worksheet.Cells.Item($z,2) = $zeit
@@ -206,28 +202,17 @@ Do{
         {
             $kuerzel = $worksheet.Cells.Item($z,3).Text
         }
-	    $worksheet.Cells.Item($z,4) = "ok"
 	    $worksheet.Cells.Item($z,5) = [float]$windowTextBox.Text
 	    $worksheet.Cells.Item($z,6) = [int]$windowTextBox2.Text / 100
 	    $worksheet.Cells.Item($z,7) = [float]$windowTextBox3.Text
 	    $worksheet.Cells.Item($z,8) = [int]$windowTextBox4.Text / 100
 	    $worksheet.Cells.Item($z,10) = "ok"
 	    $worksheet.Cells.Item($z,11) = "ok"
-	    $worksheet.Cells.Item($z,12) = "ok"  
-	    $worksheet.Cells.Item($z,13) = "ok"
 	    $worksheet.Cells.Item($z,14) = $bemerkung
 	    $worksheet.Cells.Item($z,15) = ""
-	    $worksheet.Cells.Item($z,16) = "ok"
 	    $worksheet.Cells.Item($z,17) = [float]$windowTextBox5.Text
 	    $worksheet.Cells.Item($z,18) = [int]$windowTextBox6.Text / 100
-	    $worksheet.Cells.Item($z,19) = "ok"
-	    $worksheet.Cells.Item($z,20) = "ok"
-	    $worksheet.Cells.Item($z,21) = "ok"
-	    $worksheet.Cells.Item($z,22) = "ok"
-        $worksheet.Cells.Item($z,23) = ""
-        $worksheet.Cells.Item($z,24) = ""
-	    $worksheet.Cells.Item($z,25) = $zeit + "/" + $kuerzel
-	    $worksheet.Cells.Item($z,26) = $zeit + "/" + $kuerzel
+
 sleep 1
 clear
 #----------------------------------------------------------------------------------
